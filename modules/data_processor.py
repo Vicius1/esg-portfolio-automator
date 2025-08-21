@@ -1,11 +1,14 @@
 import pandas as pd
 from config import *
+import logging
+
+logger = logging.getLogger(__name__)
 
 def calculate_portfolio_metrics(df):
     """
     Recebe o DataFrame, calcula as métricas de performance e formata os resultados.
     """
-    print("\nCalculando métricas de performance do portfólio...")
+    logger.info("Calculando métricas de performance do portfólio...")
 
     numeric_cols = [COL_QUANTIDADE, COL_CUSTO_TOTAL, COL_PRECO_ATUAL]
     for col in numeric_cols:
@@ -21,8 +24,8 @@ def calculate_portfolio_metrics(df):
         lambda row: (row[COL_RESULTADO_RS] / row[COL_CUSTO_TOTAL]) if row[COL_CUSTO_TOTAL] != 0 else 0,
         axis=1
     )
-    
-    print("Cálculos finalizados.")
+
+    logger.info("Cálculos finalizados.")
     return df
 
 def format_dataframe_for_sheets(df):
@@ -30,7 +33,7 @@ def format_dataframe_for_sheets(df):
     Recebe o DataFrame com dados numéricos e o formata para uma
     exibição amigável na planilha.
     """
-    print("Formatando DataFrame para exibição final...")
+    logger.info("Formatando DataFrame para exibição final...")
 
     df_formatted = df.copy()
 

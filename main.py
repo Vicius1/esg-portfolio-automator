@@ -1,4 +1,4 @@
-from modules import sheets_handler, data_fetcher
+from modules import sheets_handler, data_fetcher, data_processor
 
 def main():
     """
@@ -13,14 +13,15 @@ def main():
         print("DataFrame vazio. Verifique a planilha ou a conexão. Encerrando.")
         return
 
-    tickers = portfolio_df['Ticker'].tolist()
+    tickers = portfolio_df["Ticker"].tolist()
     prices = data_fetcher.fetch_market_prices(tickers)
-    
-    portfolio_df['Preço Atual'] = prices
-    
-    final_df = data_fetcher.enrich_with_esg_scores(portfolio_df)
+    portfolio_df["Preço Atual"] = prices
 
-    print("\n--- DataFrame Final Consolidado ---")
+    enriched_df = data_fetcher.enrich_with_esg_scores(portfolio_df)
+
+    final_df = data_processor.calculate_portfolio_metrics(enriched_df)
+
+    print("\n--- DataFrame Final Consolidado (Dados Brutos)---")
     print(final_df)
     print("-----------------------------------")
 

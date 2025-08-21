@@ -1,6 +1,6 @@
 import logging
-from modules import sheets_handler, data_fetcher, data_processor
-from config import COL_TICKER, COL_PRECO_ATUAL
+from modules import sheets_handler, data_fetcher, data_processor, visualizer
+from config import COL_TICKER, COL_PRECO_ATUAL, FILENAME_CHART
 
 logging.basicConfig(
     level=logging.INFO,
@@ -36,6 +36,8 @@ def main():
     enriched_df = data_fetcher.enrich_with_esg_scores(portfolio_df)
 
     processed_df = data_processor.calculate_portfolio_metrics(enriched_df)
+
+    visualizer.create_portfolio_pie_chart(processed_df, FILENAME_CHART)
 
     formatted_df = data_processor.format_dataframe_for_sheets(processed_df)
 

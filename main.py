@@ -1,6 +1,9 @@
+from dotenv import load_dotenv
+load_dotenv()
+
 import logging
-from modules import sheets_handler, data_fetcher, data_processor, visualizer
-from config import COL_TICKER, COL_PRECO_ATUAL, FILENAME_CHART
+from modules import sheets_handler, data_fetcher, data_processor, visualizer, notifier
+from config import *
 
 logging.basicConfig(
     level=logging.INFO,
@@ -42,6 +45,12 @@ def main():
     formatted_df = data_processor.format_dataframe_for_sheets(processed_df)
 
     sheets_handler.update_worksheet(worksheet, formatted_df)
+
+    if ENABLE_EMAIL_NOTIFICATION:
+        notifier.send_email_notification(
+            df=formatted_df,
+            image_path=FILENAME_CHART
+        )
 
     logger.info("--- Execução finalizada com sucesso ---")
 

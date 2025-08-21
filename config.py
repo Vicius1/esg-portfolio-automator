@@ -1,3 +1,10 @@
+import os
+
+ENABLE_EMAIL_NOTIFICATION = True 
+EMAIL_SENDER = os.environ.get("EMAIL_SENDER")
+EMAIL_RECEIVER = os.environ.get("EMAIL_RECEIVER")
+EMAIL_APP_PASSWORD = os.environ.get("EMAIL_APP_PASSWORD")
+
 SCOPES = [
     "https://www.googleapis.com/auth/spreadsheets",
     "https://www.googleapis.com/auth/drive"

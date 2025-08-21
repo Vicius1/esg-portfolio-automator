@@ -19,10 +19,14 @@ def main():
 
     enriched_df = data_fetcher.enrich_with_esg_scores(portfolio_df)
 
-    final_df = data_processor.calculate_portfolio_metrics(enriched_df)
+    processed_df = data_processor.calculate_portfolio_metrics(enriched_df)
+
+    formatted_df = data_processor.format_dataframe_for_sheets(processed_df)
+
+    sheets_handler.update_worksheet(worksheet, formatted_df)
 
     print("\n--- DataFrame Final Consolidado (Dados Brutos)---")
-    print(final_df)
+    print(formatted_df)
     print("-----------------------------------")
 
 if __name__ == "__main__":

@@ -32,3 +32,21 @@ def get_data_as_dataframe(worksheet):
     df = pd.DataFrame(data)
     print("Dados da planilha carregados para o DataFrame.")
     return df
+
+def update_worksheet(worksheet, df):
+    """
+    Recebe o DataFrame formatado e o escreve na planilha.
+    """
+    print("\nIniciando a atualização da planilha...")
+    if worksheet is None:
+        print("ERRO: Worksheet não encontrado.")
+        return
+
+    try:
+        worksheet.clear()
+        data_to_write = [df.columns.tolist()] + df.values.tolist()
+        worksheet.update("A1", data_to_write, value_input_option="USER_ENTERED")
+        
+        print("Planilha atualizada com sucesso! Verifique o resultado no seu Google Sheets")
+    except Exception as e:
+        print(f"ERRO: Não foi possível atualizar a planilha: {e}")

@@ -16,7 +16,7 @@ jobs:
     - name: 2. Configurar o Python
       uses: actions/setup-python@v4
       with:
-        python-version: '3.11'
+        python-version: '3.11' 
 
     - name: 3. Instalar Dependências
       run: |
@@ -24,11 +24,16 @@ jobs:
         pip install -r requirements.txt
 
     - name: 4. Criar Arquivos de Segredos
+      env:
+        GOOGLE_CREDENTIALS: ${{ secrets.GOOGLE_CREDENTIALS }}
+        EMAIL_SENDER: ${{ secrets.EMAIL_SENDER }}
+        EMAIL_RECEIVER: ${{ secrets.EMAIL_RECEIVER }}
+        EMAIL_APP_PASSWORD: ${{ secrets.EMAIL_APP_PASSWORD }}
       run: |
-        echo "${{ secrets.GOOGLE_CREDENTIALS }}" > credentials.json
-        echo "EMAIL_SENDER=${{ secrets.EMAIL_SENDER }}" >> .env
-        echo "EMAIL_RECEIVER=${{ secrets.EMAIL_RECEIVER }}" >> .env
-        echo "EMAIL_APP_PASSWORD=${{ secrets.EMAIL_APP_PASSWORD }}" >> .env
-
+        echo "$GOOGLE_CREDENTIALS" > credentials.json
+        echo "EMAIL_SENDER=$EMAIL_SENDER" >> .env
+        echo "EMAIL_RECEIVER=$EMAIL_RECEIVER" >> .env
+        echo "EMAIL_APP_PASSWORD=$EMAIL_APP_PASSWORD" >> .env
+      
     - name: 5. Executar o Script Principal
       run: python main.py

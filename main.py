@@ -1,4 +1,5 @@
 from modules import sheets_handler, data_fetcher, data_processor
+from config import COL_TICKER, COL_PRECO_ATUAL
 
 def main():
     """
@@ -13,9 +14,9 @@ def main():
         print("DataFrame vazio. Verifique a planilha ou a conexão. Encerrando.")
         return
 
-    tickers = portfolio_df["Ticker"].tolist()
+    tickers = portfolio_df[COL_TICKER].tolist()
     prices = data_fetcher.fetch_market_prices(tickers)
-    portfolio_df["Preço Atual"] = prices
+    portfolio_df[COL_PRECO_ATUAL] = prices
 
     enriched_df = data_fetcher.enrich_with_esg_scores(portfolio_df)
 

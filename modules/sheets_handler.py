@@ -1,5 +1,6 @@
 import gspread
 import pandas as pd
+from gspread_dataframe import set_with_dataframe
 from config import SCOPES, CREDENTIALS_FILE, SHEET_NAME
 
 def connect_and_get_worksheet():
@@ -43,9 +44,7 @@ def update_worksheet(worksheet, df):
         return
 
     try:
-        worksheet.clear()
-        data_to_write = [df.columns.tolist()] + df.values.tolist()
-        worksheet.update("A1", data_to_write, value_input_option="USER_ENTERED")
+        set_with_dataframe(worksheet, df, resize=False)
         
         print("Planilha atualizada com sucesso! Verifique o resultado no seu Google Sheets")
     except Exception as e:

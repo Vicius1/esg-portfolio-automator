@@ -57,13 +57,20 @@ Para configurar e executar este projeto na sua própria máquina, siga os passos
     ```
 
 2.  **Crie e Ative um Ambiente Virtual:**
+
+    #### Windows:
     ```bash
-    # Windows
     python -m venv venv
     .\venv\Scripts\activate
     ```
 
-3.  **Instale as Dependências:**
+    #### Linux:
+    ```bash
+    python3 -m venv venv
+    source venv/bin/activate
+    ```
+    
+4.  **Instale as Dependências:**
     ```bash
     pip install -r requirements.txt
     ```
